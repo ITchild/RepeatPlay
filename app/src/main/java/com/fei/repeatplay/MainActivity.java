@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -12,10 +13,16 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.fei.repeatplay.adapter.MainPlayListAdapter;
+import com.fei.repeatplay.bean.VideoInfo;
+import com.fei.repeatplay.util.SharesPreUtil;
+import com.fei.repeatplay.util.VideoUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,22 +39,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private boolean isNotShowAgin = false;
 
     private TextView main_path_tv;
-    private Button main_choice_bt;
 
     private RecyclerView main_list_rlv;
+    private MainPlayListAdapter adapter;
+    private List<VideoInfo> data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initView();
-
+        initData();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         checkPermission();
+        String path = SharesPreUtil.getPath();
+        main_path_tv.setText(null == path ? getResources().getString(R.string.str_noFile) : path);
+        List<VideoInfo> flagData = VideoUtil.getVideo(this,main_path_tv.getText().toString());
+        if(null == flagData){
+            return;
+        }
+        data.addAll(flagData);
+        if(null != data) {
+            adapter.setData(data);
+        }
     }
 
     private void initView(){
@@ -56,6 +73,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.main_choice_bt).setOnClickListener(this);
     }
 
+    private void initData(){
+        if(null == data){
+            data = new ArrayList<>();
+        }
+        adapter = new MainPlayListAdapter(this,data);
+        main_list_rlv.setLayoutManager(new GridLayoutManager(this,2));
+        main_list_rlv.setAdapter(adapter);
+    }
 
     @Override
     public void onClick(View view) {
