@@ -9,11 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.fei.repeatplay.R;
 import com.fei.repeatplay.bean.VideoInfo;
-import com.fei.repeatplay.util.VideoUtil;
 
-import java.io.File;
 import java.util.List;
 
 public class MainPlayListAdapter extends RecyclerView.Adapter<MainPlayListAdapter.MyHolder> {
@@ -41,10 +40,23 @@ public class MainPlayListAdapter extends RecyclerView.Adapter<MainPlayListAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyHolder holder, final int position) {
         VideoInfo info  = data.get(position);
-        holder.itemplay_dis_iv.setImageBitmap(VideoUtil.getVideoPhoto(info.getPath()));
-        holder.itemplay_name_tv.setText(info.getDisplayName());
+
+        Glide.with(context.getApplicationContext())
+                .load(info.getPath())
+                .placeholder(R.mipmap.nopic)
+                .into(holder.itemplay_dis_iv);
+//        holder.itemplay_dis_iv.setImageBitmap(VideoUtil.getVideoPhoto(info.getPath()));
+        holder.itemplay_name_tv.setText(info.getTitle());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(null != mOnPlayFileClick){
+                    mOnPlayFileClick.onPlayClick(position);
+                }
+            }
+        });
     }
 
     @Override
@@ -65,8 +77,17 @@ public class MainPlayListAdapter extends RecyclerView.Adapter<MainPlayListAdapte
             if(null == itemplay_dis_iv){
                 itemplay_dis_iv = itemView.findViewById(R.id.itemplay_dis_iv);
             }
-
         }
+    }
+
+    public interface OnPlayFileClick{
+        void onPlayClick(int position);
+    }
+
+    private OnPlayFileClick mOnPlayFileClick;
+
+    public void setOnPlayFileClick(OnPlayFileClick onPlayFileClick){
+        this.mOnPlayFileClick = onPlayFileClick;
     }
 
 }

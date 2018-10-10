@@ -1,9 +1,7 @@
 package com.fei.repeatplay.util;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
-import android.widget.Toast;
 
 import com.fei.repeatplay.bean.VideoInfo;
 
@@ -18,7 +16,7 @@ public class VideoUtil {
         ArrayList<VideoInfo> list = new ArrayList<>();
         File file = new File(fileAbsolutePath);
         if (!file.exists()){
-            Toast.makeText(context, "文件夹不存在", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "文件夹不存在", Toast.LENGTH_SHORT).show();
             return null;
         }
         File[] subFile = file.listFiles();
@@ -30,7 +28,8 @@ public class VideoUtil {
                 System.out.println("----name = "+filename);
                 // 判断是否为MP4结尾
                 if (filename.trim().toLowerCase().endsWith(".mp4")||filename.trim().toLowerCase().endsWith(".3gp")||
-                        filename.trim().toLowerCase().endsWith(".avi")||filename.trim().toLowerCase().endsWith(".flv")) {
+                        filename.trim().toLowerCase().endsWith(".avi")||filename.trim().toLowerCase().endsWith(".flv")||
+                        filename.trim().toLowerCase().endsWith(".mkv")) {
                     VideoInfo info = new VideoInfo();
                     info.setPath(subFile[iFileLength].getPath());
                     info.setTitle(subFile[iFileLength].getName());
@@ -40,13 +39,6 @@ public class VideoUtil {
             }
         }
         return list;
-    }
-    //根据路径得到视频缩略图
-    public static Bitmap getVideoPhoto(String videoPath) {
-        MediaMetadataRetriever media =new MediaMetadataRetriever();
-        media.setDataSource(videoPath);
-        Bitmap bitmap = media.getFrameAtTime();
-        return bitmap;
     }
 
     //获取视频总时长

@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
     <TextView
         android:id="@+id/main_path_tv"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="50dp"
         android:gravity="center"
         android:textColor="@color/black"
         android:text="@string/str_noFile"/>
@@ -36,5 +36,27 @@
         android:layout_height="match_parent">
     </android.support.v7.widget.RecyclerView>
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="@color/white">
+        <ProgressBar
+            android:id="@+id/main_loading_pb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/progressbarstyle"/>
+
+    <TextView
+        android:id="@+id/main_empty_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        android:text="该目录未包含视频文件"/>
+
+    </LinearLayout>
 
 </LinearLayout>

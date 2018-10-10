@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:name=".RepeatApplication"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,10 +21,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".FileChoiceAc"
+        <activity android:name=".activity.FileChoiceAc"
             android:theme="@style/Theme.AppCompat.Light.Dialog">
-
         </activity>
+        <activity android:name=".activity.PlayAc"></activity>
 
     </application>
 

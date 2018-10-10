@@ -1,6 +1,6 @@
 package com.fei.repeatplay.bean;
 
-public class VideoInfo {
+public class VideoInfo  {
     /**
      *
      */
