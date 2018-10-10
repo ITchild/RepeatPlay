@@ -47,7 +47,6 @@ public class MainPlayListAdapter extends RecyclerView.Adapter<MainPlayListAdapte
                 .load(info.getPath())
                 .placeholder(R.mipmap.nopic)
                 .into(holder.itemplay_dis_iv);
-//        holder.itemplay_dis_iv.setImageBitmap(VideoUtil.getVideoPhoto(info.getPath()));
         holder.itemplay_name_tv.setText(info.getTitle());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
